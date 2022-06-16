@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.9.xsd">
+    <changeSet id="create-tables" author="oshamina">
+        <sql>
+            create table persons
+            (
+                id            uuid not null
+                    primary key,
+                date_of_birth date,
+                first_name    varchar(255),
+                last_name     varchar(255),
+                middle_name   varchar(255)
+            );
+
+            create table companies
+            (
+                id                  uuid not null
+                    primary key,
+                full_name           varchar(255),
+                inn                 varchar(255),
+                legal_address       varchar(255),
+                ogrn                varchar(255),
+                postal_address      varchar(255),
+                short_name          varchar(255),
+                general_director_id uuid
+                    constraint companies_general_director_id_fk
+                        references persons,
+                head_company_id     uuid
+                    constraint companies_head_company_id_fk
+                        references companies
+            );
+        </sql>
+    </changeSet>
+</databaseChangeLog>
